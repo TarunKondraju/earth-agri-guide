@@ -25,9 +25,10 @@ import {
 } from "@/components/ui/sidebar";
 
 const navigationItems = [
-  { title: "Dashboard", url: "/", icon: BarChart3 },
+  { title: "GEE Analysis", url: "/", icon: Satellite },
+  { title: "Dashboard", url: "/dashboard", icon: BarChart3 },
   { title: "Field Management", url: "/fields", icon: MapPin },
-  { title: "Satellite Analysis", url: "/satellite", icon: Satellite },
+  { title: "Satellite Analysis", url: "/satellite", icon: TrendingUp },
   { title: "Weather Monitor", url: "/weather", icon: Cloud },
   { title: "Crop Health", url: "/crops", icon: Sprout },
   { title: "Analytics", url: "/analytics", icon: TrendingUp },
