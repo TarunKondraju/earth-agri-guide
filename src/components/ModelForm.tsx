@@ -19,7 +19,8 @@ export default function ModelForm() {
     form.append("cloud_cover", cloudCover.toString());
     form.append("aoi_file", file);
 
-    const res = await fetch("http://127.0.0.1:8000/run_model", {
+    const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+    const res = await fetch(`${API_URL}/run_model`, {
       method: "POST",
       body: form,
     });

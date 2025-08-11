@@ -6,8 +6,9 @@ import { Loader2, Layers, ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 
 interface MapViewProps {
   selectedRegion?: {
-    coordinates: [number, number][];
+    coordinates?: [number, number][];
     name: string;
+    type?: 'coordinates' | 'upload' | 'draw';
   };
   analysisResults?: any;
   isLoading?: boolean;
