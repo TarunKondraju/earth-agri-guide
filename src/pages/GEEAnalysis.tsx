@@ -15,6 +15,7 @@ import {
   CheckCircle,
   Clock
 } from "lucide-react";
+import ModelForm from "@/components/ModelForm";
 
 const GEEAnalysis = () => {
   const [analysisParams, setAnalysisParams] = useState<AnalysisParameters | null>(null);
@@ -151,7 +152,7 @@ const GEEAnalysis = () => {
         {/* Right Panel - Map and Results */}
         <div className="lg:col-span-2">
           <Tabs defaultValue="map" className="h-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="map" className="flex items-center gap-2">
                 <Map className="h-4 w-4" />
                 Map View
@@ -163,6 +164,10 @@ const GEEAnalysis = () => {
               <TabsTrigger value="results" className="flex items-center gap-2">
                 <Satellite className="h-4 w-4" />
                 Results
+              </TabsTrigger>
+              <TabsTrigger value="model" className="flex items-center gap-2">
+                <Satellite className="h-4 w-4" />
+                GEE Model
               </TabsTrigger>
             </TabsList>
 
@@ -277,6 +282,14 @@ const GEEAnalysis = () => {
                       </div>
                     </div>
                   )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="model" className="h-[calc(100%-60px)]">
+              <Card className="h-full">
+                <CardContent className="p-6 h-full overflow-y-auto">
+                  <ModelForm />
                 </CardContent>
               </Card>
             </TabsContent>
