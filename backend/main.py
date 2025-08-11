@@ -19,7 +19,7 @@ app.add_middleware(
 ee.Initialize(project="iari-big-data-project")
 
 # Load your PUSAeCMS model file
-models.init_from_js("/path/to/PUSAeCMS_code.txt")  # adjust path
+models.init_from_js(r"C:\Users\BDL\Documents\GitHub\earth-agri-guide\backend\PUSAeCMS_code.txt")  # adjust path
 
 @app.post("/run-model")
 async def run_model(
