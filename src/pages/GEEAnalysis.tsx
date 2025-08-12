@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserInputPanel, AnalysisParameters } from "@/components/UserInputPanel";
-import { MapView } from "@/components/MapView";
+import type { AnalysisParameters } from "@/components/UserInputPanel";
+import type { Geometry } from "geojson";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { 
@@ -15,8 +15,9 @@ import {
   CheckCircle,
   Clock
 } from "lucide-react";
-import ModelForm from "@/components/ModelForm";
-
+import { AnalysisControls } from "@/components/gee/AnalysisControls";
+import MapLeaflet from "@/components/gee/MapLeaflet";
+import { useGEEAnalysis } from "@/hooks/use-gee-analysis";
 const GEEAnalysis = () => {
   const [analysisParams, setAnalysisParams] = useState<AnalysisParameters | null>(null);
   const [isLoading, setIsLoading] = useState(false);

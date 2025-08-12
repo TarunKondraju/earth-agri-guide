@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import GEEAnalysis from "./pages/GEEAnalysis";
 import Dashboard from "./pages/Dashboard";
@@ -23,7 +23,7 @@ const App = () => (
             <Route path="/" element={<GEEAnalysis />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/fields" element={<FieldManagement />} />
-            <Route path="/satellite" element={<SatelliteAnalysis />} />
+            <Route path="/satellite" element={<Navigate to="/" replace />} />
             <Route path="/weather" element={<div className="p-6"><h1 className="text-2xl font-bold">Weather Monitor</h1><p className="text-muted-foreground">Coming soon...</p></div>} />
             <Route path="/crops" element={<div className="p-6"><h1 className="text-2xl font-bold">Crop Health</h1><p className="text-muted-foreground">Coming soon...</p></div>} />
             <Route path="/analytics" element={<div className="p-6"><h1 className="text-2xl font-bold">Analytics</h1><p className="text-muted-foreground">Coming soon...</p></div>} />

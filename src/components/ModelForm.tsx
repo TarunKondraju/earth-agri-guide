@@ -10,7 +10,7 @@ export default function ModelForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) return alert("Please upload KML file");
+    if (!file) return alert("Please upload an AOI file (.kml, .geojson, or .zip)");
 
     const form = new FormData();
     form.append("parameter", parameter);
@@ -20,7 +20,7 @@ export default function ModelForm() {
     form.append("aoi_file", file);
 
     const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-    const res = await fetch(`${API_URL}/run_model`, {
+    const res = await fetch(`${API_URL}/run-model`, {
       method: "POST",
       body: form,
     });
@@ -38,7 +38,7 @@ export default function ModelForm() {
       <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
       <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
       <input type="number" value={cloudCover} onChange={e => setCloudCover(parseFloat(e.target.value))} />
-      <input type="file" accept=".kml" onChange={e => setFile(e.target.files?.[0] || null)} />
+      <input type="file" accept=".kml,.geojson,.zip" onChange={e => setFile(e.target.files?.[0] || null)} />
       <button type="submit">Run Model</button>
 
       {result && <div className="mt-4">{result}</div>}
