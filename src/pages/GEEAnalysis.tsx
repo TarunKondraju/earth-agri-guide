@@ -23,6 +23,9 @@ const GEEAnalysis = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [analysisResults, setAnalysisResults] = useState<any>(null);
   const [analysisStatus, setAnalysisStatus] = useState<'idle' | 'processing' | 'completed' | 'error'>('idle');
+  const [aoiFile, setAoiFile] = useState<File | null>(null);
+  const [aoiGeometry, setAoiGeometry] = useState<Geometry | null>(null);
+  const { loading: geeLoading, result: geeResult, runModel } = useGEEAnalysis();
 
   const handleAnalysisStart = async (params: AnalysisParameters) => {
     setAnalysisParams(params);
@@ -142,9 +145,19 @@ const GEEAnalysis = () => {
         <div className="lg:col-span-1 overflow-y-auto">
           <Card className="h-full">
             <CardContent className="p-6">
-              <UserInputPanel 
-                onAnalysisStart={handleAnalysisStart}
-                isLoading={isLoading}
+              <AnalysisControls
+                aoiFile={aoiFile}
+                onAoiUpload={(file) => setAoiFile(file)}
+                loading={geeLoading}
+                onRun={(values, file) => {
+                  runModel({
+                    parameter: values.parameter,
+                    start_date: values.start_date,
+                    end_date: values.end_date,
+                    cloud_cover: values.cloud_cover,
+                    aoi_file: file,
+                  });
+                }}
               />
             </CardContent>
           </Card>
@@ -153,7 +166,7 @@ const GEEAnalysis = () => {
         {/* Right Panel - Map and Results */}
         <div className="lg:col-span-2">
           <Tabs defaultValue="map" className="h-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="map" className="flex items-center gap-2">
                 <Map className="h-4 w-4" />
                 Map View
@@ -166,19 +179,18 @@ const GEEAnalysis = () => {
                 <Satellite className="h-4 w-4" />
                 Results
               </TabsTrigger>
-              <TabsTrigger value="model" className="flex items-center gap-2">
-                <Satellite className="h-4 w-4" />
-                GEE Model
-              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="map" className="h-[calc(100%-60px)]">
               <Card className="h-full">
                 <CardContent className="p-0 h-full">
-                  <MapView 
-                    selectedRegion={analysisParams?.region}
-                    analysisResults={analysisResults}
-                    isLoading={isLoading}
+                  <MapLeaflet
+                    aoi={aoiGeometry as any}
+                    onAOIChange={(geom, file) => {
+                      setAoiGeometry(geom as any);
+                      if (file) setAoiFile(file);
+                    }}
+                    resultSummary={geeResult ? { parameter: geeResult.parameter, mean: geeResult.mean } : null}
                   />
                 </CardContent>
               </Card>
@@ -287,13 +299,6 @@ const GEEAnalysis = () => {
               </Card>
             </TabsContent>
 
-            <TabsContent value="model" className="h-[calc(100%-60px)]">
-              <Card className="h-full">
-                <CardContent className="p-6 h-full overflow-y-auto">
-                  <ModelForm />
-                </CardContent>
-              </Card>
-            </TabsContent>
           </Tabs>
         </div>
       </div>
